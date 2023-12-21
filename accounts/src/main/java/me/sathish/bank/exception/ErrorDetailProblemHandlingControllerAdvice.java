@@ -1,44 +1,74 @@
 package me.sathish.bank.exception;
 
-import java.util.Comparator;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
+import java.util.Map;
+import me.sathish.bank.dto.AccountsMSErrorResponseDTO;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ProblemDetail;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-public class ErrorDetailProblemHandlingControllerAdvice {
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    ProblemDetail onException(MethodArgumentNotValidException methodArgumentNotValidException) {
-        ProblemDetail problemDetail =
-                ProblemDetail.forStatusAndDetail(
-                        HttpStatusCode.valueOf(400), "Invalid request content.");
-        problemDetail.setTitle("Constraint Violation");
-        List<ApiValidationError> validationErrorsList =
-                methodArgumentNotValidException.getAllErrors().stream()
-                        .map(
-                                objectError -> {
-                                    FieldError fieldError = (FieldError) objectError;
-                                    return new ApiValidationError(
-                                            fieldError.getObjectName(),
-                                            fieldError.getField(),
-                                            fieldError.getRejectedValue(),
-                                            Objects.requireNonNull(
-                                                    fieldError.getDefaultMessage(), ""));
-                                })
-                        .sorted(Comparator.comparing(ApiValidationError::field))
-                        .toList();
-        problemDetail.setProperty("violations", validationErrorsList);
-        return problemDetail;
+public class ErrorDetailProblemHandlingControllerAdvice extends ResponseEntityExceptionHandler {
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException ex,
+            HttpHeaders headers,
+            HttpStatusCode status,
+            WebRequest request) {
+        Map<String, String> validationErrors = new HashMap<>();
+        List<ObjectError> validationErrorList = ex.getBindingResult().getAllErrors();
+        validationErrorList.forEach(
+                (error) -> {
+                    String fieldName = ((FieldError) error).getField();
+                    String validationMsg = error.getDefaultMessage();
+                    validationErrors.put(fieldName, validationMsg);
+                });
+        return new ResponseEntity<>(validationErrors, HttpStatus.BAD_REQUEST);
     }
 
-    record ApiValidationError(String object, String field, Object rejectedValue, String message) {}
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<AccountsMSErrorResponseDTO> handleGlobalException(
+            Exception exception, WebRequest webRequest) {
+        AccountsMSErrorResponseDTO errorResponseDTO =
+                new AccountsMSErrorResponseDTO(
+                        webRequest.getDescription(false),
+                        HttpStatus.INTERNAL_SERVER_ERROR,
+                        exception.getMessage(),
+                        LocalDateTime.now());
+        return new ResponseEntity<>(errorResponseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<AccountsMSErrorResponseDTO> handleResourceNotFoundException(
+            ResourceNotFoundException exception, WebRequest webRequest) {
+        AccountsMSErrorResponseDTO errorResponseDTO =
+                new AccountsMSErrorResponseDTO(
+                        webRequest.getDescription(false),
+                        HttpStatus.NOT_FOUND,
+                        exception.getMessage(),
+                        LocalDateTime.now());
+        return new ResponseEntity<>(errorResponseDTO, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(CustomerExistsException.class)
+    public ResponseEntity<AccountsMSErrorResponseDTO> handleCustomerAlreadyExistsException(
+            CustomerExistsException exception, WebRequest webRequest) {
+        AccountsMSErrorResponseDTO errorResponseDTO =
+                new AccountsMSErrorResponseDTO(
+                        webRequest.getDescription(false),
+                        HttpStatus.BAD_REQUEST,
+                        exception.getMessage(),
+                        LocalDateTime.now());
+        return new ResponseEntity<>(errorResponseDTO, HttpStatus.BAD_REQUEST);
+    }
 }
