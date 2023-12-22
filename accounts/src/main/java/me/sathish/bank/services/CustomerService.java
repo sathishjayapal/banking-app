@@ -1,7 +1,11 @@
 package me.sathish.bank.services;
 
 import java.util.Optional;
+import me.sathish.bank.dto.CustomerDTO;
 import me.sathish.bank.entities.Customer;
+import me.sathish.bank.exception.CustomerExistsException;
+import me.sathish.bank.exception.ResourceNotFoundException;
+import me.sathish.bank.mapper.CustomerMapper;
 import me.sathish.bank.repositories.CustomerRepository;
 import me.sathish.bank.response.PagedResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +46,42 @@ public class CustomerService {
     }
 
     public Customer saveCustomer(Customer customer) {
+
         return customerRepository.save(customer);
+    }
+
+    public Customer saveCustomerFromDTO(CustomerDTO customerDTO) {
+        Customer customer = CustomerMapper.mapToCustomer(customerDTO, new Customer());
+        Optional<Customer> optionalCustomer =
+                customerRepository.findByPhoneNumber(customerDTO.getPhoneNumber());
+        if (optionalCustomer.isPresent()) {
+            throw new CustomerExistsException(
+                    "Customer already registered with given mobileNumber "
+                            + customerDTO.getPhoneNumber());
+        }
+        customer = customerRepository.save(customer);
+        return customer;
+    }
+
+    public Customer updateCustomer(Long customerID, CustomerDTO customerDto) {
+        Customer customer =
+                customerRepository
+                        .findById(customerID)
+                        .orElseThrow(
+                                () ->
+                                        new ResourceNotFoundException(
+                                                "Customer", "CustomerID", customerID.toString()));
+        CustomerMapper.mapToCustomer(customerDto, customer);
+        return customerRepository.save(customer);
+    }
+
+    public Customer findCustomerByPhoneNumber(String phoneNumber) {
+        return customerRepository
+                .findByPhoneNumber(phoneNumber)
+                .orElseThrow(
+                        () ->
+                                new ResourceNotFoundException(
+                                        "Customer", "Phone Number", phoneNumber));
     }
 
     public void deleteCustomerById(Long id) {

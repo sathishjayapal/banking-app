@@ -1,11 +1,11 @@
 package me.sathish.bank.controllers;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 import lombok.extern.slf4j.Slf4j;
-import me.sathish.bank.dto.AccountsDTO;
 import me.sathish.bank.dto.AccountsMSReponseDTO;
 import me.sathish.bank.dto.CustomerDTO;
 import me.sathish.bank.entities.Accounts;
-import me.sathish.bank.mapper.AccountsMapper;
 import me.sathish.bank.response.PagedResult;
 import me.sathish.bank.services.AccountService;
 import me.sathish.bank.utils.AppConstants;
@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Validated
 @RequestMapping("/api/accounts")
 @Slf4j
 public class AccountController {
@@ -69,43 +70,59 @@ public class AccountController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("findByPhone/{phoneNumber}")
+    public ResponseEntity<CustomerDTO> getAccountByPhoneNumber(
+            @PathVariable
+                    @Pattern(
+                            regexp = "(^$|[0-9]{10})",
+                            message = "Phone Number number must be 10 digits")
+                    String phoneNumber) {
+        CustomerDTO customerDto = accountService.fetchAccount(phoneNumber);
+        return ResponseEntity.status(HttpStatus.OK).body(customerDto);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<AccountsMSReponseDTO> createAccount(
-            @RequestBody @Validated CustomerDTO customerDTO) {
+            @Valid @RequestBody CustomerDTO customerDTO) {
         accountService.createAccount(customerDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new AccountsMSReponseDTO(AppConstants.STATUS_201, AppConstants.MESSAGE_201));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Accounts> updateAccount(
-            @PathVariable Long id, @RequestBody Accounts accounts) {
-        AccountsDTO accountsDTO = new AccountsDTO();
-        AccountsMapper.mapToAccountsDto(accounts, accountsDTO);
-        CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO.setAccountsDto(accountsDTO);
-        customerDTO.setName("Sathish Jayapal");
-
-        return accountService
-                .findAccountById(id)
-                .map(
-                        accountObj -> {
-                            accounts.setAccountNumber(id);
-                            return ResponseEntity.ok(accounts);
-                        })
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    @PutMapping("/update")
+    public ResponseEntity<AccountsMSReponseDTO> updateAccount(
+            @Valid @RequestBody CustomerDTO customerDto) {
+        boolean isUpdated = accountService.updateAccount(customerDto);
+        if (isUpdated) {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(
+                            new AccountsMSReponseDTO(
+                                    AppConstants.STATUS_200, AppConstants.MESSAGE_200));
+        } else {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+                    .body(
+                            new AccountsMSReponseDTO(
+                                    AppConstants.STATUS_417, AppConstants.MESSAGE_417_UPDATE));
+        }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Accounts> deleteAccount(@PathVariable Long id) {
-        return accountService
-                .findAccountById(id)
-                .map(
-                        account -> {
-                            accountService.deleteAccountById(id);
-                            return ResponseEntity.ok(account);
-                        })
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    @DeleteMapping("/{phoneNumber}")
+    public ResponseEntity<AccountsMSReponseDTO> deleteAccount(
+            @PathVariable
+                    @Pattern(regexp = "(^$|[0-9]{10})", message = "Phone number must be 10 digits")
+                    String phoneNumber) {
+        boolean isDeleted = accountService.deleteAccount(phoneNumber);
+        if (isDeleted) {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(
+                            new AccountsMSReponseDTO(
+                                    AppConstants.STATUS_200, AppConstants.MESSAGE_200));
+        } else {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+                    .body(
+                            new AccountsMSReponseDTO(
+                                    AppConstants.STATUS_417, AppConstants.MESSAGE_417_DELETE));
+        }
     }
 }

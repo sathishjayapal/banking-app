@@ -19,12 +19,10 @@ import org.hibernate.Hibernate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Accounts extends AccountMSBaseEntity {
-    @NotEmpty(message = "CustomerID cannot be empty")
-    @Column(name = "customer_id", nullable = false)
+    @Column(name = "customer_id")
     private Long customerId;
 
     @Column(name = "account_number")
-    @NotEmpty(message = "Account Number cannot be empty")
     @Id
     private Long accountNumber;
 
