@@ -11,7 +11,7 @@ import me.sathish.bank.mapper.AccountsMapper;
 import me.sathish.bank.mapper.CustomerMapper;
 import me.sathish.bank.repositories.AccountRepository;
 import me.sathish.bank.response.PagedResult;
-import me.sathish.bank.utils.AppConstants;
+import me.sathish.bank.utils.AcoountMSConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -62,8 +62,8 @@ public class AccountService {
         newAccount.setCustomerId(customer.getCustomerId());
         long randomAccNumber = 1000000000L + new Random().nextInt(900000000);
         newAccount.setAccountNumber(randomAccNumber);
-        newAccount.setAccountType(AppConstants.SAVINGS);
-        newAccount.setBankAddress(AppConstants.ADDRESS);
+        newAccount.setAccountType(AcoountMSConstants.SAVINGS);
+        newAccount.setBankAddress(AcoountMSConstants.ADDRESS);
         return newAccount;
     }
 

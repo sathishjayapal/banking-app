@@ -1,6 +1,6 @@
 package me.sathish.bank.controllers;
 
-import static me.sathish.bank.utils.AppConstants.PROFILE_TEST;
+import static me.sathish.bank.utils.AcoountMSConstants.PROFILE_TEST;
 
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.ActiveProfiles;

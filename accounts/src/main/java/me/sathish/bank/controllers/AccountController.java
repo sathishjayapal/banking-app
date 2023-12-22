@@ -8,7 +8,7 @@ import me.sathish.bank.dto.CustomerDTO;
 import me.sathish.bank.entities.Accounts;
 import me.sathish.bank.response.PagedResult;
 import me.sathish.bank.services.AccountService;
-import me.sathish.bank.utils.AppConstants;
+import me.sathish.bank.utils.AcoountMSConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,22 +41,22 @@ public class AccountController {
     public PagedResult<Accounts> getAllAccounts(
             @RequestParam(
                             value = "pageNo",
-                            defaultValue = AppConstants.DEFAULT_PAGE_NUMBER,
+                            defaultValue = AcoountMSConstants.DEFAULT_PAGE_NUMBER,
                             required = false)
                     int pageNo,
             @RequestParam(
                             value = "pageSize",
-                            defaultValue = AppConstants.DEFAULT_PAGE_SIZE,
+                            defaultValue = AcoountMSConstants.DEFAULT_PAGE_SIZE,
                             required = false)
                     int pageSize,
             @RequestParam(
                             value = "sortBy",
-                            defaultValue = AppConstants.DEFAULT_SORT_BY,
+                            defaultValue = AcoountMSConstants.DEFAULT_SORT_BY,
                             required = false)
                     String sortBy,
             @RequestParam(
                             value = "sortDir",
-                            defaultValue = AppConstants.DEFAULT_SORT_DIRECTION,
+                            defaultValue = AcoountMSConstants.DEFAULT_SORT_DIRECTION,
                             required = false)
                     String sortDir) {
         return accountService.findAllAccounts(pageNo, pageSize, sortBy, sortDir);
@@ -87,7 +87,7 @@ public class AccountController {
             @Valid @RequestBody CustomerDTO customerDTO) {
         accountService.createAccount(customerDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new AccountsMSReponseDTO(AppConstants.STATUS_201, AppConstants.MESSAGE_201));
+                .body(new AccountsMSReponseDTO(AcoountMSConstants.STATUS_201, AcoountMSConstants.MESSAGE_201));
     }
 
     @PutMapping("/update")
@@ -98,12 +98,12 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(
                             new AccountsMSReponseDTO(
-                                    AppConstants.STATUS_200, AppConstants.MESSAGE_200));
+                                    AcoountMSConstants.STATUS_200, AcoountMSConstants.MESSAGE_200));
         } else {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
                     .body(
                             new AccountsMSReponseDTO(
-                                    AppConstants.STATUS_417, AppConstants.MESSAGE_417_UPDATE));
+                                    AcoountMSConstants.STATUS_417, AcoountMSConstants.MESSAGE_417_UPDATE));
         }
     }
 
@@ -117,12 +117,12 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(
                             new AccountsMSReponseDTO(
-                                    AppConstants.STATUS_200, AppConstants.MESSAGE_200));
+                                    AcoountMSConstants.STATUS_200, AcoountMSConstants.MESSAGE_200));
         } else {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
                     .body(
                             new AccountsMSReponseDTO(
-                                    AppConstants.STATUS_417, AppConstants.MESSAGE_417_DELETE));
+                                    AcoountMSConstants.STATUS_417, AcoountMSConstants.MESSAGE_417_DELETE));
         }
     }
 }

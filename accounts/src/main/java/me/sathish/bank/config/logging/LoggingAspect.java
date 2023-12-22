@@ -1,6 +1,6 @@
 package me.sathish.bank.config.logging;
 
-import me.sathish.bank.utils.AppConstants;
+import me.sathish.bank.utils.AcoountMSConstants;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -42,7 +42,7 @@ public class LoggingAspect {
 
     @AfterThrowing(pointcut = "applicationPackagePointcut()", throwing = "e")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable e) {
-        if (env.acceptsProfiles(Profiles.of(AppConstants.PROFILE_NOT_PROD))) {
+        if (env.acceptsProfiles(Profiles.of(AcoountMSConstants.PROFILE_NOT_PROD))) {
             log.error(
                     "Exception in {}.{}() with cause = '{}' and exception = '{}'",
                     joinPoint.getSignature().getDeclaringTypeName(),

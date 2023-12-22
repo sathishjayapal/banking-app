@@ -1,6 +1,6 @@
 package me.sathish.bank.controllers;
 
-import static me.sathish.bank.utils.AppConstants.PROFILE_TEST;
+import static me.sathish.bank.utils.AcoountMSConstants.PROFILE_TEST;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -15,7 +15,7 @@ import java.util.Optional;
 import me.sathish.bank.entities.Accounts;
 import me.sathish.bank.response.PagedResult;
 import me.sathish.bank.services.AccountService;
-import me.sathish.bank.utils.AppConstants;
+import me.sathish.bank.utils.AcoountMSConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,13 +44,13 @@ class AccountsControllerTest {
         this.accountsList = new ArrayList<>();
         this.accountsList.add(
                 new Accounts(
-                        faker.random().nextLong(), 1L, AppConstants.SAVINGS, AppConstants.ADDRESS));
+                        faker.random().nextLong(), 1L, AcoountMSConstants.SAVINGS, AcoountMSConstants.ADDRESS));
         this.accountsList.add(
                 new Accounts(
-                        faker.random().nextLong(), 2L, AppConstants.SAVINGS, AppConstants.ADDRESS));
+                        faker.random().nextLong(), 2L, AcoountMSConstants.SAVINGS, AcoountMSConstants.ADDRESS));
         this.accountsList.add(
                 new Accounts(
-                        faker.random().nextLong(), 3L, AppConstants.SAVINGS, AppConstants.ADDRESS));
+                        faker.random().nextLong(), 3L, AcoountMSConstants.SAVINGS, AcoountMSConstants.ADDRESS));
     }
 
     @Test
@@ -77,7 +77,7 @@ class AccountsControllerTest {
         Long accountId = 1L;
         Accounts accounts =
                 new Accounts(
-                        faker.random().nextLong(), 1L, AppConstants.SAVINGS, AppConstants.ADDRESS);
+                        faker.random().nextLong(), 1L, AcoountMSConstants.SAVINGS, AcoountMSConstants.ADDRESS);
         given(accountService.findAccountById(accountId)).willReturn(Optional.of(accounts));
 
         this.mockMvc

@@ -11,7 +11,7 @@ import me.sathish.bank.dto.CustomerDTO;
 import me.sathish.bank.entities.Accounts;
 import me.sathish.bank.repositories.AccountRepository;
 import me.sathish.bank.response.PagedResult;
-import me.sathish.bank.utils.AppConstants;
+import me.sathish.bank.utils.AcoountMSConstants;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -63,7 +63,7 @@ class AccountServiceTest {
         assertThat(optionalAccount).isPresent();
         Accounts accounts = optionalAccount.get();
         assertThat(accounts.getAccountNumber()).isEqualTo(1L);
-        assertThat(accounts.getBankAddress()).isEqualTo(AppConstants.ADDRESS);
+        assertThat(accounts.getBankAddress()).isEqualTo(AcoountMSConstants.ADDRESS);
     }
 
     @Test
@@ -85,7 +85,7 @@ class AccountServiceTest {
         AccountsDTO accountsDTO = accountService.createAccount(customerDTO);
         // then
         assertThat(accountsDTO).isNotNull();
-        assertThat(accountsDTO.getAccountType()).isEqualTo(AppConstants.SAVINGS);
+        assertThat(accountsDTO.getAccountType()).isEqualTo(AcoountMSConstants.SAVINGS);
     }
 
     @Test
@@ -101,9 +101,9 @@ class AccountServiceTest {
     private Accounts getAccount() {
         Accounts accounts = new Accounts();
         accounts.setAccountNumber(1L);
-        accounts.setBankAddress(AppConstants.ADDRESS);
+        accounts.setBankAddress(AcoountMSConstants.ADDRESS);
         accounts.setCustomerId(1L);
-        accounts.setAccountType(AppConstants.SAVINGS);
+        accounts.setAccountType(AcoountMSConstants.SAVINGS);
         return accounts;
     }
 
@@ -122,8 +122,8 @@ class AccountServiceTest {
         customerDTO.setPhoneNumber(faker.phoneNumber().phoneNumber());
         customerDTO.setEmail(faker.internet().emailAddress());
         AccountsDTO accountsDTO = new AccountsDTO();
-        accountsDTO.setBankAddress(AppConstants.ADDRESS);
-        accountsDTO.setAccountType(AppConstants.SAVINGS);
+        accountsDTO.setBankAddress(AcoountMSConstants.ADDRESS);
+        accountsDTO.setAccountType(AcoountMSConstants.SAVINGS);
         accountsDTO.setAccountNumber(faker.random().nextLong());
         return customerDTO;
     }

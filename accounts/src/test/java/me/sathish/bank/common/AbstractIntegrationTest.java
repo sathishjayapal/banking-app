@@ -1,6 +1,6 @@
 package me.sathish.bank.common;
 
-import static me.sathish.bank.utils.AppConstants.PROFILE_TEST;
+import static me.sathish.bank.utils.AcoountMSConstants.PROFILE_TEST;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 import com.fasterxml.jackson.databind.ObjectMapper;

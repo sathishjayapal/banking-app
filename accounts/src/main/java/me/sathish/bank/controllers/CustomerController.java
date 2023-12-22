@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.sathish.bank.entities.Customer;
 import me.sathish.bank.response.PagedResult;
 import me.sathish.bank.services.CustomerService;
-import me.sathish.bank.utils.AppConstants;
+import me.sathish.bank.utils.AcoountMSConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,22 +36,22 @@ public class CustomerController {
     public PagedResult<Customer> getAllCustomers(
             @RequestParam(
                             value = "pageNo",
-                            defaultValue = AppConstants.DEFAULT_PAGE_NUMBER,
+                            defaultValue = AcoountMSConstants.DEFAULT_PAGE_NUMBER,
                             required = false)
                     int pageNo,
             @RequestParam(
                             value = "pageSize",
-                            defaultValue = AppConstants.DEFAULT_PAGE_SIZE,
+                            defaultValue = AcoountMSConstants.DEFAULT_PAGE_SIZE,
                             required = false)
                     int pageSize,
             @RequestParam(
                             value = "sortBy",
-                            defaultValue = AppConstants.DEFAULT_SORT_BY,
+                            defaultValue = AcoountMSConstants.DEFAULT_SORT_BY,
                             required = false)
                     String sortBy,
             @RequestParam(
                             value = "sortDir",
-                            defaultValue = AppConstants.DEFAULT_SORT_DIRECTION,
+                            defaultValue = AcoountMSConstants.DEFAULT_SORT_DIRECTION,
                             required = false)
                     String sortDir) {
         return customerService.findAllCustomers(pageNo, pageSize, sortBy, sortDir);
