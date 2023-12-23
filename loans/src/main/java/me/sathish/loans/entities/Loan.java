@@ -26,7 +26,7 @@ public class Loan extends LoanMSBaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    private Long loanId;
+    private Long Id;
 
     @Column(nullable = false)
     @NotEmpty(message = "Phone number cannot be empty")
@@ -43,7 +43,7 @@ public class Loan extends LoanMSBaseEntity {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Loan loan = (Loan) o;
-        return loanId != null && Objects.equals(loanId, loan.loanId);
+        return Id != null && Objects.equals(Id, loan.Id);
     }
 
     @Override

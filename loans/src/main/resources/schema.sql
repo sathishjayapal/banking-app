@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS ` loans `
 (
     `
-    loan_id
+    Id
     `
     int
     NOT
@@ -37,6 +37,6 @@ CREATE TABLE IF NOT EXISTS ` loans `
 ) DEFAULT NULL,
     PRIMARY KEY
 (
-    `loan_id`
+    `Id`
 )
     );

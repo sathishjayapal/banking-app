@@ -76,7 +76,7 @@ public class LoanService {
                     () ->
                         new ResourceNotFoundException(
                             "Loan", "phoneNumber", phoneNumber));
-        loanRepository.deleteById(loans.getLoanId());
+        loanRepository.delete(loans);
         return true;
     }
 
