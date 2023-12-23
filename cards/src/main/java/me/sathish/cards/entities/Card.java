@@ -1,12 +1,10 @@
-package me.sathish.loans.entities;
+package me.sathish.cards.entities;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,31 +15,30 @@ import org.hibernate.annotations.GenericGenerator;
 import java.util.Objects;
 
 @Entity
-@Table(name = "loans")
+@Table(name = "cards")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Loan extends LoanMSBaseEntity {
+public class Card extends CardMSBaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private Long Id;
-    @Column(nullable = false)
-    @NotEmpty(message = "Phone number cannot be empty")
+
     private String phoneNumber;
-    private String loanNumber;
-    private String loanType;
-    private int totalLoan;
-    private int amountPaid;
-    private int outstandingAmount;
+    private String cardNumber;
+    private String cardType;
+    private int totalLimit;
+    private int amountUsed;
+    private int availableAmount;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Loan loan = (Loan) o;
-        return Id != null && Objects.equals(Id, loan.Id);
+        Card card = (Card) o;
+        return Id != null && Objects.equals(Id, card.Id);
     }
 
     @Override

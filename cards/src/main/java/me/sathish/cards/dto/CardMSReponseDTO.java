@@ -1,11 +1,11 @@
-package me.sathish.loans.dto;
+package me.sathish.cards.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class LoansMSReponseDTO {
+public class CardMSReponseDTO {
     private String errorCode;
     private String errorString;
 }

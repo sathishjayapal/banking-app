@@ -104,7 +104,7 @@ class LoanControllerTest {
 
     //    @Test
     //    void shouldCreateNewLoan() throws Exception {
-    //        given(loanService.saveLoan(any(LoansDTO.class)))
+    //        given(loanService.saveLoan(any(LoanDTO.class)))
     //                .willAnswer((invocation) -> invocation.getArgument(0));
     //
     //        Loan loan =
@@ -169,7 +169,7 @@ class LoanControllerTest {
     //                        0,
     //                        0);
     //        given(loanService.findLoanById(loanId)).willReturn(Optional.of(loan));
-    //        given(loanService.saveLoan(any(LoansDTO.class)))
+    //        given(loanService.saveLoan(any(LoanDTO.class)))
     //                .willAnswer((invocation) -> invocation.getArgument(0));
     //
     //        this.mockMvc

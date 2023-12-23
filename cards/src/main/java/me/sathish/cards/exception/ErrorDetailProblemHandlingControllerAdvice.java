@@ -1,6 +1,6 @@
-package me.sathish.loans.exception;
+package me.sathish.cards.exception;
 
-import me.sathish.loans.dto.LoanMSErrorResponseDTO;
+import me.sathish.cards.dto.CardMSErrorResponseDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -38,10 +38,10 @@ public class ErrorDetailProblemHandlingControllerAdvice extends ResponseEntityEx
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<LoanMSErrorResponseDTO> handleGlobalException(
+    public ResponseEntity<CardMSErrorResponseDTO> handleGlobalException(
         Exception exception, WebRequest webRequest) {
-        LoanMSErrorResponseDTO errorResponseDTO =
-            new LoanMSErrorResponseDTO(
+        CardMSErrorResponseDTO errorResponseDTO =
+            new CardMSErrorResponseDTO(
                 webRequest.getDescription(false),
                 HttpStatus.INTERNAL_SERVER_ERROR,
                 exception.getMessage(),
@@ -50,10 +50,10 @@ public class ErrorDetailProblemHandlingControllerAdvice extends ResponseEntityEx
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<LoanMSErrorResponseDTO> handleResourceNotFoundException(
+    public ResponseEntity<CardMSErrorResponseDTO> handleResourceNotFoundException(
         ResourceNotFoundException exception, WebRequest webRequest) {
-        LoanMSErrorResponseDTO errorResponseDTO =
-            new LoanMSErrorResponseDTO(
+        CardMSErrorResponseDTO errorResponseDTO =
+            new CardMSErrorResponseDTO(
                 webRequest.getDescription(false),
                 HttpStatus.NOT_FOUND,
                 exception.getMessage(),
@@ -61,11 +61,11 @@ public class ErrorDetailProblemHandlingControllerAdvice extends ResponseEntityEx
         return new ResponseEntity<>(errorResponseDTO, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(LoanExistsException.class)
-    public ResponseEntity<LoanMSErrorResponseDTO> handleCustomerAlreadyExistsException(
-        LoanExistsException exception, WebRequest webRequest) {
-        LoanMSErrorResponseDTO errorResponseDTO =
-            new LoanMSErrorResponseDTO(
+    @ExceptionHandler(CardLoanExistsException.class)
+    public ResponseEntity<CardMSErrorResponseDTO> handleCustomerAlreadyExistsException(
+        CardLoanExistsException exception, WebRequest webRequest) {
+        CardMSErrorResponseDTO errorResponseDTO =
+            new CardMSErrorResponseDTO(
                 webRequest.getDescription(false),
                 HttpStatus.BAD_REQUEST,
                 exception.getMessage(),

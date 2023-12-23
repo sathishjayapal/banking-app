@@ -7,10 +7,10 @@ import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 
 @Data
-public class LoansDTO {
+public class LoanDTO {
 
     @NotEmpty(message = "Phone Number can not be a null or empty")
-    @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile Number must be 10 digits")
+    @Pattern(regexp = "(^$|[0-9]{10})", message = "Phone Number must be 10 digits")
     private String phoneNumber;
 
     @NotEmpty(message = "Invalid Loan Number")

@@ -1,6 +1,6 @@
 package me.sathish.loans.services;
 
-import me.sathish.loans.dto.LoansDTO;
+import me.sathish.loans.dto.LoanDTO;
 import me.sathish.loans.entities.Loan;
 import me.sathish.loans.exception.LoanExistsException;
 import me.sathish.loans.exception.ResourceNotFoundException;
@@ -80,15 +80,15 @@ public class LoanService {
         return true;
     }
 
-    public boolean updateLoan(LoansDTO loansDto) {
+    public boolean updateLoan(LoanDTO loanDto) {
         Loan loans =
             loanRepository
-                .findByLoanNumber(loansDto.getLoanNumber())
+                .findByLoanNumber(loanDto.getLoanNumber())
                 .orElseThrow(
                     () ->
                         new ResourceNotFoundException(
-                            "Loan", "LoanNumber", loansDto.getLoanNumber()));
-        LoansMapper.mapToLoans(loansDto, loans);
+                            "Loan", "LoanNumber", loanDto.getLoanNumber()));
+        LoansMapper.mapToLoans(loanDto, loans);
         loanRepository.save(loans);
         return true;
     }

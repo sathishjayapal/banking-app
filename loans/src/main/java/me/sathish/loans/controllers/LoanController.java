@@ -3,8 +3,8 @@ package me.sathish.loans.controllers;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.extern.slf4j.Slf4j;
-import me.sathish.loans.dto.LoansDTO;
-import me.sathish.loans.dto.LoansMSReponseDTO;
+import me.sathish.loans.dto.LoanDTO;
+import me.sathish.loans.dto.LoanMSReponseDTO;
 import me.sathish.loans.entities.Loan;
 import me.sathish.loans.response.PagedResult;
 import me.sathish.loans.services.LoanService;
@@ -71,36 +71,36 @@ public class LoanController {
 
     @PostMapping("/create/{phoneNumber}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<LoansMSReponseDTO> createLoan(
+    public ResponseEntity<LoanMSReponseDTO> createLoan(
         @PathVariable
         @Pattern(regexp = "(^$|[0-9]{10})", message = "Phone number must be 10 digits")
         String phoneNumber) {
         loanService.saveLoan(phoneNumber);
         return ResponseEntity.status(HttpStatus.CREATED)
             .body(
-                new LoansMSReponseDTO(
+                new LoanMSReponseDTO(
                     LoanMSConstants.STATUS_201, LoanMSConstants.MESSAGE_201));
     }
 
     @PutMapping("/update/{phoneNumber}")
-    public ResponseEntity<LoansMSReponseDTO> updateLoan(@Valid @RequestBody LoansDTO loansDto) {
-        boolean isUpdated = loanService.updateLoan(loansDto);
+    public ResponseEntity<LoanMSReponseDTO> updateLoan(@Valid @RequestBody LoanDTO loanDto) {
+        boolean isUpdated = loanService.updateLoan(loanDto);
         if (isUpdated) {
             return ResponseEntity.status(HttpStatus.OK)
                 .body(
-                    new LoansMSReponseDTO(
+                    new LoanMSReponseDTO(
                         LoanMSConstants.STATUS_200, LoanMSConstants.MESSAGE_200));
         } else {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
                 .body(
-                    new LoansMSReponseDTO(
+                    new LoanMSReponseDTO(
                         LoanMSConstants.STATUS_417,
                         LoanMSConstants.MESSAGE_417_UPDATE));
         }
     }
 
     @DeleteMapping("/{phoneNumber}")
-    public ResponseEntity<LoansMSReponseDTO> deleteLoan(
+    public ResponseEntity<LoanMSReponseDTO> deleteLoan(
         @PathVariable
         @Pattern(regexp = "(^$|[0-9]{10})", message = "Phone number must be 10 digits")
         String phoneNumber) {
@@ -108,12 +108,12 @@ public class LoanController {
         if (isDeleted) {
             return ResponseEntity.status(HttpStatus.OK)
                 .body(
-                    new LoansMSReponseDTO(
+                    new LoanMSReponseDTO(
                         LoanMSConstants.STATUS_200, LoanMSConstants.MESSAGE_200));
         } else {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
                 .body(
-                    new LoansMSReponseDTO(
+                    new LoanMSReponseDTO(
                         LoanMSConstants.STATUS_417,
                         LoanMSConstants.MESSAGE_417_DELETE));
         }

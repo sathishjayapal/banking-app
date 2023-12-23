@@ -1,0 +1,12 @@
+{
+    "generator-springboot": {
+        "appName": "cards",
+        "packageName": "me.sathish.cards",
+        "databaseType": "mysql",
+        "dbMigrationTool": "none",
+        "dbMigrationFormat": "yaml",
+        "features": [],
+        "buildTool": "maven",
+        "packageFolder": "me/sathish/cards"
+    }
+}
