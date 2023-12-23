@@ -1,6 +1,6 @@
-package me.sathish.bank;
+package me.sathish.loans;
 
-import me.sathish.bank.common.AbstractIntegrationTest;
+import me.sathish.loans.common.AbstractIntegrationTest;
 
 class ApplicationIntegrationTest extends AbstractIntegrationTest {
 

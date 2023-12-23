@@ -1,0 +1,12 @@
+{
+    "generator-springboot": {
+        "appName": "loans",
+        "packageName": "me.sathish.loans",
+        "databaseType": "mysql",
+        "dbMigrationTool": "none",
+        "dbMigrationFormat": "yaml",
+        "features": [],
+        "buildTool": "maven",
+        "packageFolder": "me/sathish/loans"
+    }
+}
