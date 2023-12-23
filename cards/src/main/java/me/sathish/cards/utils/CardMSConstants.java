@@ -9,9 +9,9 @@ public final class CardMSConstants {
     public static final String MESSAGE_200 = "Request processed successfully";
     public static final String STATUS_417 = "417";
     public static final String MESSAGE_417_UPDATE =
-        "Update operation failed. Please try again or contact Dev team";
+            "Update operation failed. Please try again or contact Dev team";
     public static final String MESSAGE_417_DELETE =
-        "Delete operation failed. Please try again or contact Dev team";
+            "Delete operation failed. Please try again or contact Dev team";
     public static final String PROFILE_PROD = "prod";
     public static final String PROFILE_NOT_PROD = "!" + PROFILE_PROD;
     public static final String PROFILE_TEST = "test";

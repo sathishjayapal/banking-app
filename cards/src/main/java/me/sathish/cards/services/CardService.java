@@ -30,9 +30,9 @@ public class CardService {
 
     public PagedResult<Card> findAllCards(int pageNo, int pageSize, String sortBy, String sortDir) {
         Sort sort =
-            sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())
-                ? Sort.by(sortBy).ascending()
-                : Sort.by(sortBy).descending();
+                sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())
+                        ? Sort.by(sortBy).ascending()
+                        : Sort.by(sortBy).descending();
         // create Pageable instance
         Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
         Page<Card> cardsPage = cardRepository.findAll(pageable);
@@ -44,16 +44,21 @@ public class CardService {
     }
 
     public CardDTO fetchCard(String phoneNumber) {
-        Card cards = cardRepository.findByPhoneNumber(phoneNumber).orElseThrow(
-            () -> new ResourceNotFoundException("Card", "phoneNumber", phoneNumber)
-        );
+        Card cards =
+                cardRepository
+                        .findByPhoneNumber(phoneNumber)
+                        .orElseThrow(
+                                () ->
+                                        new ResourceNotFoundException(
+                                                "Card", "phoneNumber", phoneNumber));
         return CardsMapper.mapToCardsDto(cards, new CardDTO());
     }
 
     public Card saveCard(String phoneNumber) {
         Optional<Card> optionalCards = cardRepository.findByPhoneNumber(phoneNumber);
         if (optionalCards.isPresent()) {
-            throw new CardLoanExistsException("Card already registered with given phoneNumber " + phoneNumber);
+            throw new CardLoanExistsException(
+                    "Card already registered with given phoneNumber " + phoneNumber);
         }
         return cardRepository.save(createNewCard(phoneNumber));
     }
@@ -75,17 +80,26 @@ public class CardService {
     }
 
     public boolean updateCard(CardDTO cardsDto) {
-        Card card = cardRepository.findByCardNumber(cardsDto.getCardNumber()).orElseThrow(
-            () -> new ResourceNotFoundException("Card", "CardNumber", cardsDto.getCardNumber()));
+        Card card =
+                cardRepository
+                        .findByCardNumber(cardsDto.getCardNumber())
+                        .orElseThrow(
+                                () ->
+                                        new ResourceNotFoundException(
+                                                "Card", "CardNumber", cardsDto.getCardNumber()));
         CardsMapper.mapToCards(cardsDto, card);
         cardRepository.save(card);
         return true;
     }
 
     public boolean deleteCardByPhoneNumber(String phoneNumber) {
-        Card cards = cardRepository.findByPhoneNumber(phoneNumber).orElseThrow(
-            () -> new ResourceNotFoundException("Card", "mobileNumber", phoneNumber)
-        );
+        Card cards =
+                cardRepository
+                        .findByPhoneNumber(phoneNumber)
+                        .orElseThrow(
+                                () ->
+                                        new ResourceNotFoundException(
+                                                "Card", "mobileNumber", phoneNumber));
         cardRepository.deleteById(cards.getId());
         return true;
     }

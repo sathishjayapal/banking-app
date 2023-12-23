@@ -7,5 +7,4 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration(proxyBeanMethods = false)
 @OpenAPIDefinition(info = @Info(title = "loans", version = "v1"), servers = @Server(url = "/"))
-public class SwaggerConfig {
-}
+public class SwaggerConfig {}

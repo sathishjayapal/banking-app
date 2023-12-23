@@ -29,9 +29,9 @@ public class LoanService {
 
     public PagedResult<Loan> findAllLoans(int pageNo, int pageSize, String sortBy, String sortDir) {
         Sort sort =
-            sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())
-                ? Sort.by(sortBy).ascending()
-                : Sort.by(sortBy).descending();
+                sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())
+                        ? Sort.by(sortBy).ascending()
+                        : Sort.by(sortBy).descending();
 
         // create Pageable instance
         Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
@@ -47,7 +47,7 @@ public class LoanService {
         Optional<Loan> optionalLoans = loanRepository.findByPhoneNumber(phoneNumber);
         if (optionalLoans.isPresent()) {
             throw new LoanExistsException(
-                "Loan already registered with given mobileNumber " + phoneNumber);
+                    "Loan already registered with given mobileNumber " + phoneNumber);
         }
         return loanRepository.save(createNewLoan(phoneNumber));
     }
@@ -70,24 +70,24 @@ public class LoanService {
 
     public boolean deleteLoanById(String phoneNumber) {
         Loan loans =
-            loanRepository
-                .findByPhoneNumber(phoneNumber)
-                .orElseThrow(
-                    () ->
-                        new ResourceNotFoundException(
-                            "Loan", "phoneNumber", phoneNumber));
+                loanRepository
+                        .findByPhoneNumber(phoneNumber)
+                        .orElseThrow(
+                                () ->
+                                        new ResourceNotFoundException(
+                                                "Loan", "phoneNumber", phoneNumber));
         loanRepository.delete(loans);
         return true;
     }
 
     public boolean updateLoan(LoanDTO loanDto) {
         Loan loans =
-            loanRepository
-                .findByLoanNumber(loanDto.getLoanNumber())
-                .orElseThrow(
-                    () ->
-                        new ResourceNotFoundException(
-                            "Loan", "LoanNumber", loanDto.getLoanNumber()));
+                loanRepository
+                        .findByLoanNumber(loanDto.getLoanNumber())
+                        .orElseThrow(
+                                () ->
+                                        new ResourceNotFoundException(
+                                                "Loan", "LoanNumber", loanDto.getLoanNumber()));
         LoansMapper.mapToLoans(loanDto, loans);
         loanRepository.save(loans);
         return true;

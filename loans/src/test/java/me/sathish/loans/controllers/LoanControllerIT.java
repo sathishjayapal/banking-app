@@ -20,32 +20,32 @@ class LoanControllerIT extends AbstractIntegrationTest {
 
         loanList = new ArrayList<>();
         this.loanList.add(
-            new Loan(
-                1L,
-                "6082424100",
-                "1L",
-                LoanMSConstants.HOME_LOAN,
-                LoanMSConstants.NEW_LOAN_LIMIT,
-                0,
-                0));
+                new Loan(
+                        1L,
+                        "6082424100",
+                        "1L",
+                        LoanMSConstants.HOME_LOAN,
+                        LoanMSConstants.NEW_LOAN_LIMIT,
+                        0,
+                        0));
         this.loanList.add(
-            new Loan(
-                2L,
-                "6082424101",
-                "2L",
-                LoanMSConstants.HOME_LOAN,
-                LoanMSConstants.NEW_LOAN_LIMIT,
-                0,
-                0));
+                new Loan(
+                        2L,
+                        "6082424101",
+                        "2L",
+                        LoanMSConstants.HOME_LOAN,
+                        LoanMSConstants.NEW_LOAN_LIMIT,
+                        0,
+                        0));
         this.loanList.add(
-            new Loan(
-                3L,
-                "6082424102",
-                "3L",
-                LoanMSConstants.HOME_LOAN,
-                LoanMSConstants.NEW_LOAN_LIMIT,
-                0,
-                0));
+                new Loan(
+                        3L,
+                        "6082424102",
+                        "3L",
+                        LoanMSConstants.HOME_LOAN,
+                        LoanMSConstants.NEW_LOAN_LIMIT,
+                        0,
+                        0));
 
         //        loanList = loanRepository.saveAll(loanList);
     }

@@ -27,9 +27,11 @@ public class Loan extends LoanMSBaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private Long Id;
+
     @Column(nullable = false)
     @NotEmpty(message = "Phone number cannot be empty")
     private String phoneNumber;
+
     private String loanNumber;
     private String loanType;
     private int totalLoan;

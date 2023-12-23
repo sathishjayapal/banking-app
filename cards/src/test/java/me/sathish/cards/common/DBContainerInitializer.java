@@ -8,13 +8,13 @@ import org.testcontainers.containers.MySQLContainer;
 
 @Slf4j
 public class DBContainerInitializer
-    implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+        implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
     private static final MySQLContainer<?> sqlContainer =
-        new MySQLContainer<>("mysql:8.0")
-            .withDatabaseName("integration-tests-db")
-            .withUsername("username")
-            .withPassword("password");
+            new MySQLContainer<>("mysql:8.0")
+                    .withDatabaseName("integration-tests-db")
+                    .withUsername("username")
+                    .withPassword("password");
 
     static {
         sqlContainer.start();
@@ -22,9 +22,9 @@ public class DBContainerInitializer
 
     public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
         TestPropertyValues.of(
-                "spring.datasource.url=" + sqlContainer.getJdbcUrl(),
-                "spring.datasource.username=" + sqlContainer.getUsername(),
-                "spring.datasource.password=" + sqlContainer.getPassword())
-            .applyTo(configurableApplicationContext.getEnvironment());
+                        "spring.datasource.url=" + sqlContainer.getJdbcUrl(),
+                        "spring.datasource.username=" + sqlContainer.getUsername(),
+                        "spring.datasource.password=" + sqlContainer.getPassword())
+                .applyTo(configurableApplicationContext.getEnvironment());
     }
 }
