@@ -95,7 +95,7 @@ public class CardController {
         }
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/{phoneNumber}")
     public ResponseEntity<CardMSReponseDTO> deleteCard(@PathVariable
                                                        @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits")
                                                        String phoneNumber) {
