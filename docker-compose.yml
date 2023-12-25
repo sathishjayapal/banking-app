@@ -1,0 +1,44 @@
+version: '3.8'
+services:
+  accounts:
+    image: "travelhelper0h/accounts:latest"
+    container_name: accountms
+    ports:
+      - "8080:8080"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=local"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - sathishbanknetwork
+  cards:
+    image: "travelhelper0h/cards:latest"
+    container_name: cardms
+    ports:
+      - "9000:9000"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=local"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - sathishbanknetwork
+  loans:
+    image: "travelhelper0h/loans:latest"
+    container_name: loanms
+    ports:
+      - "8070:8070"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=local"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - sathishbanknetwork
+networks:
+  sathishbanknetwork:
+    driver: "bridge"

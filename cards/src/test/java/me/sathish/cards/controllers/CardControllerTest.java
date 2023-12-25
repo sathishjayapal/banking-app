@@ -1,9 +1,9 @@
 package me.sathish.cards.controllers;
 
+import static me.sathish.cards.utils.CardMSConstants.PROFILE_TEST;
+
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.ActiveProfiles;
-
-import static me.sathish.cards.utils.CardMSConstants.PROFILE_TEST;
 
 @WebMvcTest(controllers = CardController.class)
 @ActiveProfiles(PROFILE_TEST)

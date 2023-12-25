@@ -1,5 +1,7 @@
 package me.sathish.cards.services;
 
+import java.util.Optional;
+import java.util.Random;
 import me.sathish.cards.dto.CardDTO;
 import me.sathish.cards.entities.Card;
 import me.sathish.cards.exception.CardLoanExistsException;
@@ -14,9 +16,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
-import java.util.Random;
 
 @Service
 public class CardService {

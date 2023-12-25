@@ -1,15 +1,14 @@
 package me.sathish.loans.controllers;
 
+import static me.sathish.loans.utils.LoanMSConstants.PROFILE_TEST;
+
+import java.util.ArrayList;
+import java.util.List;
 import me.sathish.loans.entities.Loan;
 import me.sathish.loans.utils.LoanMSConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.ActiveProfiles;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static me.sathish.loans.utils.LoanMSConstants.PROFILE_TEST;
 
 @WebMvcTest(controllers = LoanController.class)
 @ActiveProfiles(PROFILE_TEST)

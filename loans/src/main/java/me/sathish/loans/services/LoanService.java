@@ -1,5 +1,7 @@
 package me.sathish.loans.services;
 
+import java.util.Optional;
+import java.util.Random;
 import me.sathish.loans.dto.LoanDTO;
 import me.sathish.loans.entities.Loan;
 import me.sathish.loans.exception.LoanExistsException;
@@ -14,9 +16,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
-import java.util.Random;
 
 @Service
 public class LoanService {

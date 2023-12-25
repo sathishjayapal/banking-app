@@ -1,9 +1,8 @@
 package me.sathish.cards.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.data.domain.Page;
-
 import java.util.List;
+import org.springframework.data.domain.Page;
 
 public record PagedResult<T>(
         List<T> data,

@@ -1,12 +1,11 @@
 package me.sathish.loans.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
 import me.sathish.loans.common.AbstractIntegrationTest;
 import me.sathish.loans.entities.Loan;
 import me.sathish.loans.utils.LoanMSConstants;
 import org.junit.jupiter.api.BeforeEach;
-
-import java.util.ArrayList;
-import java.util.List;
 
 class LoanControllerIT extends AbstractIntegrationTest {
 
