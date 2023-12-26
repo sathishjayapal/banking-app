@@ -36,3 +36,10 @@ gen
 /accounts/.mvn/wrapper/maven-wrapper.properties
 /accounts/.mvn/jvm.config
 /accounts/.mvn/wrapper/maven-wrapper.jar
+/accounts/logs/accounts.log.2023-12-22.0.gz
+/accounts/logs/accounts.log.2023-12-23.0.gz
+/accounts/logs/cards.log.2023-12-22.0.gz
+/accounts/logs/cards.log.2023-12-23.0.gz
+/accounts/logs/loans.log.2023-12-22.0.gz
+/accounts/logs/loans.log.2023-12-23.0.gz
+/logs/accounts.log.2023-12-24.0.gz
