@@ -54,3 +54,12 @@ spring:
         show-sql: true
     main:
         allow-bean-definition-overriding: true
+accounts:
+    java_version: 18
+    build_number: 0.0.1-SNAPSHOT
+    contactDetails:
+        name: Sathish Jayapal
+        email: sjayapal@skminfotek.com
+    supported_cloud_env:
+        - Primary_Azure
+        - Secondary_AWS

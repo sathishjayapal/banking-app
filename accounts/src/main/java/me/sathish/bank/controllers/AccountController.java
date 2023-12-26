@@ -4,12 +4,14 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import me.sathish.bank.dto.AccountsMSReponseDTO;
+import me.sathish.bank.dto.AccountsRecordDTO;
 import me.sathish.bank.dto.CustomerDTO;
 import me.sathish.bank.entities.Accounts;
 import me.sathish.bank.response.PagedResult;
 import me.sathish.bank.services.AccountService;
 import me.sathish.bank.utils.AcoountMSConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -31,10 +33,27 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccountController {
 
     private final AccountService accountService;
-
+    @Autowired Environment environment;
+    @Autowired
+    private AccountsRecordDTO accountsRecordDTO;
     @Autowired
     public AccountController(AccountService accountService) {
+        this.accountsRecordDTO= accountsRecordDTO;
         this.accountService = accountService;
+    }
+
+    @GetMapping("/java-version")
+    public ResponseEntity<AccountsMSReponseDTO> getAccountMSJVM() {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(
+                        new AccountsMSReponseDTO(
+                                AcoountMSConstants.STATUS_200,
+                                environment.getProperty("java.version")));
+    }
+    @GetMapping("/accounts-config")
+    public ResponseEntity<AccountsRecordDTO> getAccountsConfig() {
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(accountsRecordDTO);
     }
 
     @GetMapping
