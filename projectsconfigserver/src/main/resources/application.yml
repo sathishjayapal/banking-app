@@ -9,7 +9,6 @@ spring:
       server:
         native:
           search-locations: "classpath:/config"
-        git:
-          uri: https://github.com/spring-cloud-samples/config-repo
+      label: main
 server:
   port: 8888
