@@ -1,4 +1,4 @@
-
+# Golden copy for the Configserver ver #1
 spring:
   application:
     name: "sathishconfigserver"
@@ -9,6 +9,5 @@ spring:
       server:
         native:
           search-locations: "classpath:/config"
-      label: main
 server:
   port: 8888

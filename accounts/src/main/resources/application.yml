@@ -1,11 +1,12 @@
+# Golden copy for the client to communicate with Configserver ver #1
 spring:
+  application:
+    name: "accounts"
   cloud:
     config:
       name: accounts
-      profile: native
-      label: main
   config:
-    import: "optional:configserver:http://localhost:8888/accounts"
+    import: "optional:configserver:http://localhost:8888/"
   profiles:
     active: local
 
