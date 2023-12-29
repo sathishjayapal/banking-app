@@ -59,3 +59,12 @@ spring:
     mvc:
         problemdetails:
             enabled: true
+loans:
+    java_version: 18
+    build_number: 0.0.1-SNAPSHOT
+    contactDetails:
+        name: Loans Sathish Jayapal
+        email: sjayapal@skminfotek.com
+    supported_cloud_env:
+        - LoansMS_Primary_Azure
+        - LoansMS_Secondary_AWS

@@ -3,8 +3,8 @@ package me.sathish.bank.controllers;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.extern.slf4j.Slf4j;
+import me.sathish.bank.dto.AccountMSIdentifierDTO;
 import me.sathish.bank.dto.AccountsMSReponseDTO;
-import me.sathish.bank.dto.AccountsRecordDTO;
 import me.sathish.bank.dto.CustomerDTO;
 import me.sathish.bank.entities.Accounts;
 import me.sathish.bank.response.PagedResult;
@@ -34,11 +34,11 @@ public class AccountController {
 
     private final AccountService accountService;
     @Autowired Environment environment;
+    private AccountMSIdentifierDTO accountsRecordDTO;
+
     @Autowired
-    private AccountsRecordDTO accountsRecordDTO;
-    @Autowired
-    public AccountController(AccountService accountService) {
-        this.accountsRecordDTO= accountsRecordDTO;
+    public AccountController(AccountService accountService, AccountMSIdentifierDTO accountsRecordDTO) {
+        this.accountsRecordDTO = accountsRecordDTO;
         this.accountService = accountService;
     }
 
@@ -50,10 +50,10 @@ public class AccountController {
                                 AcoountMSConstants.STATUS_200,
                                 environment.getProperty("java.version")));
     }
+
     @GetMapping("/accounts-config")
-    public ResponseEntity<AccountsRecordDTO> getAccountsConfig() {
-        return ResponseEntity.status(HttpStatus.OK)
-            .body(accountsRecordDTO);
+    public ResponseEntity<AccountMSIdentifierDTO> getAccountMSIdentifier() {
+        return ResponseEntity.status(HttpStatus.OK).body(accountsRecordDTO);
     }
 
     @GetMapping

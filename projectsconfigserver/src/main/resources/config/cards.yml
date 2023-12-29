@@ -57,3 +57,12 @@ spring:
     mvc:
         problemdetails:
             enabled: true
+cards:
+    java_version: 18
+    build_number: 0.0.1-SNAPSHOT
+    contactDetails:
+        name: Cards Sathish Jayapal
+        email: sjayapal@skminfotek.com
+    supported_cloud_env:
+        - CardsMS_Primary_Azure
+        - CardsMS_Secondary_AWS

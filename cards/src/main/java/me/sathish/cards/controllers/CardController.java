@@ -4,12 +4,14 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import me.sathish.cards.dto.CardDTO;
+import me.sathish.cards.dto.CardMSIdentifierDTO;
 import me.sathish.cards.dto.CardMSReponseDTO;
 import me.sathish.cards.entities.Card;
 import me.sathish.cards.response.PagedResult;
 import me.sathish.cards.services.CardService;
 import me.sathish.cards.utils.CardMSConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -31,12 +33,28 @@ import org.springframework.web.bind.annotation.RestController;
 public class CardController {
 
     private final CardService cardService;
-
     @Autowired
-    public CardController(CardService cardService) {
+    Environment environment;
+    private CardMSIdentifierDTO  cardMSIdentifierDTO;
+    @Autowired
+    public CardController(CardService cardService, CardMSIdentifierDTO cardMSIdentifierDTO) {
+        this.cardMSIdentifierDTO=cardMSIdentifierDTO;
         this.cardService = cardService;
     }
 
+    @GetMapping("/java-version")
+    public ResponseEntity<CardMSReponseDTO> getCardMSJVM() {
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(
+                new CardMSReponseDTO(
+                    CardMSConstants.STATUS_200,
+                    environment.getProperty("java.version")));
+    }
+
+    @GetMapping("/card-config")
+    public ResponseEntity<CardMSIdentifierDTO> getCardMSIdentifier() {
+        return ResponseEntity.status(HttpStatus.OK).body(cardMSIdentifierDTO);
+    }
     @GetMapping
     public PagedResult<Card> getAllCards(
             @RequestParam(
