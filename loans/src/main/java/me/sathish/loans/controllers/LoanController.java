@@ -3,6 +3,7 @@ package me.sathish.loans.controllers;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.extern.slf4j.Slf4j;
+import me.sathish.loans.dto.LoanCloudDTO;
 import me.sathish.loans.dto.LoanDTO;
 import me.sathish.loans.dto.LoanMSIdentifierDTO;
 import me.sathish.loans.dto.LoanMSReponseDTO;
@@ -32,24 +33,27 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class LoanController {
     private final LoanService loanService;
-    @Autowired
-    Environment environment;
-    @Autowired
-    private LoanMSIdentifierDTO loanMSIdentifierDTO;
+    @Autowired Environment environment;
+    @Autowired LoanMSIdentifierDTO loanMSIdentifierDTO;
+    private LoanCloudDTO loanCloudDTO;
 
     @Autowired
-    public LoanController(LoanService loanService, LoanMSIdentifierDTO loanMSIdentifierDTO) {
+    public LoanController(LoanService loanService, LoanMSIdentifierDTO loanMSIdentifierDTO, LoanCloudDTO loanCloudDTO) {
         this.loanService = loanService;
         this.loanMSIdentifierDTO = loanMSIdentifierDTO;
+        this.loanCloudDTO=loanCloudDTO;
     }
-
+    @GetMapping("/loans-cloud")
+    public ResponseEntity<LoanCloudDTO> getLoanMSCloudProviders() {
+        return ResponseEntity.status(HttpStatus.OK).body(loanCloudDTO);
+    }
     @GetMapping("/java-version")
     public ResponseEntity<LoanMSReponseDTO> getLoanMSJVM() {
         return ResponseEntity.status(HttpStatus.OK)
-            .body(
-                new LoanMSReponseDTO(
-                    LoanMSConstants.STATUS_200,
-                    environment.getProperty("java.version")));
+                .body(
+                        new LoanMSReponseDTO(
+                                LoanMSConstants.STATUS_200,
+                                environment.getProperty("java.version")));
     }
 
     @GetMapping("/card-config")
@@ -59,48 +63,48 @@ public class LoanController {
 
     @GetMapping
     public PagedResult<Loan> getAllLoans(
-        @RequestParam(
-            value = "pageNo",
-            defaultValue = LoanMSConstants.DEFAULT_PAGE_NUMBER,
-            required = false)
-        int pageNo,
-        @RequestParam(
-            value = "pageSize",
-            defaultValue = LoanMSConstants.DEFAULT_PAGE_SIZE,
-            required = false)
-        int pageSize,
-        @RequestParam(
-            value = "sortBy",
-            defaultValue = LoanMSConstants.DEFAULT_SORT_BY,
-            required = false)
-        String sortBy,
-        @RequestParam(
-            value = "sortDir",
-            defaultValue = LoanMSConstants.DEFAULT_SORT_DIRECTION,
-            required = false)
-        String sortDir) {
+            @RequestParam(
+                            value = "pageNo",
+                            defaultValue = LoanMSConstants.DEFAULT_PAGE_NUMBER,
+                            required = false)
+                    int pageNo,
+            @RequestParam(
+                            value = "pageSize",
+                            defaultValue = LoanMSConstants.DEFAULT_PAGE_SIZE,
+                            required = false)
+                    int pageSize,
+            @RequestParam(
+                            value = "sortBy",
+                            defaultValue = LoanMSConstants.DEFAULT_SORT_BY,
+                            required = false)
+                    String sortBy,
+            @RequestParam(
+                            value = "sortDir",
+                            defaultValue = LoanMSConstants.DEFAULT_SORT_DIRECTION,
+                            required = false)
+                    String sortDir) {
         return loanService.findAllLoans(pageNo, pageSize, sortBy, sortDir);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Loan> getLoanById(@PathVariable Long id) {
         return loanService
-            .findLoanById(id)
-            .map(ResponseEntity::ok)
-            .orElseGet(() -> ResponseEntity.notFound().build());
+                .findLoanById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/create/{phoneNumber}")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<LoanMSReponseDTO> createLoan(
-        @PathVariable
-        @Pattern(regexp = "(^$|[0-9]{10})", message = "Phone number must be 10 digits")
-        String phoneNumber) {
+            @PathVariable
+                    @Pattern(regexp = "(^$|[0-9]{10})", message = "Phone number must be 10 digits")
+                    String phoneNumber) {
         loanService.saveLoan(phoneNumber);
         return ResponseEntity.status(HttpStatus.CREATED)
-            .body(
-                new LoanMSReponseDTO(
-                    LoanMSConstants.STATUS_201, LoanMSConstants.MESSAGE_201));
+                .body(
+                        new LoanMSReponseDTO(
+                                LoanMSConstants.STATUS_201, LoanMSConstants.MESSAGE_201));
     }
 
     @PutMapping("/update/{phoneNumber}")
@@ -108,35 +112,35 @@ public class LoanController {
         boolean isUpdated = loanService.updateLoan(loanDto);
         if (isUpdated) {
             return ResponseEntity.status(HttpStatus.OK)
-                .body(
-                    new LoanMSReponseDTO(
-                        LoanMSConstants.STATUS_200, LoanMSConstants.MESSAGE_200));
+                    .body(
+                            new LoanMSReponseDTO(
+                                    LoanMSConstants.STATUS_200, LoanMSConstants.MESSAGE_200));
         } else {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
-                .body(
-                    new LoanMSReponseDTO(
-                        LoanMSConstants.STATUS_417,
-                        LoanMSConstants.MESSAGE_417_UPDATE));
+                    .body(
+                            new LoanMSReponseDTO(
+                                    LoanMSConstants.STATUS_417,
+                                    LoanMSConstants.MESSAGE_417_UPDATE));
         }
     }
 
     @DeleteMapping("/{phoneNumber}")
     public ResponseEntity<LoanMSReponseDTO> deleteLoan(
-        @PathVariable
-        @Pattern(regexp = "(^$|[0-9]{10})", message = "Phone number must be 10 digits")
-        String phoneNumber) {
+            @PathVariable
+                    @Pattern(regexp = "(^$|[0-9]{10})", message = "Phone number must be 10 digits")
+                    String phoneNumber) {
         boolean isDeleted = loanService.deleteLoanById(phoneNumber);
         if (isDeleted) {
             return ResponseEntity.status(HttpStatus.OK)
-                .body(
-                    new LoanMSReponseDTO(
-                        LoanMSConstants.STATUS_200, LoanMSConstants.MESSAGE_200));
+                    .body(
+                            new LoanMSReponseDTO(
+                                    LoanMSConstants.STATUS_200, LoanMSConstants.MESSAGE_200));
         } else {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
-                .body(
-                    new LoanMSReponseDTO(
-                        LoanMSConstants.STATUS_417,
-                        LoanMSConstants.MESSAGE_417_DELETE));
+                    .body(
+                            new LoanMSReponseDTO(
+                                    LoanMSConstants.STATUS_417,
+                                    LoanMSConstants.MESSAGE_417_DELETE));
         }
     }
 }

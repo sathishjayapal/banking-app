@@ -9,7 +9,11 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
-@EnableConfigurationProperties({ApplicationProperties.class, AccountMSIdentifierDTO.class, AccountCloudDTO.class})
+@EnableConfigurationProperties({
+    ApplicationProperties.class,
+    AccountMSIdentifierDTO.class,
+    AccountCloudDTO.class
+})
 @EnableJpaAuditing(auditorAwareRef = "auditAwareImpl")
 public class AccountMSBootApp {
 

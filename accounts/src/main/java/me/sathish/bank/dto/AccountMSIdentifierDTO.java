@@ -6,6 +6,4 @@ import java.util.Map;
 
 @ConfigurationProperties(prefix = "accounts")
 public record AccountMSIdentifierDTO(
-        String java_version,
-        String build_number,
-        Map<String, String> contactDetails) {}
+        String java_version, String build_number, Map<String, String> contactDetails) {}

@@ -39,10 +39,13 @@ public class AccountController {
     private AccountCloudDTO accountCloudDTO;
 
     @Autowired
-    public AccountController(AccountService accountService, AccountMSIdentifierDTO accountsRecordDTO, AccountCloudDTO accountCloudDTO) {
+    public AccountController(
+            AccountService accountService,
+            AccountMSIdentifierDTO accountsRecordDTO,
+            AccountCloudDTO accountCloudDTO) {
         this.accountsRecordDTO = accountsRecordDTO;
         this.accountService = accountService;
-        this.accountCloudDTO= accountCloudDTO;
+        this.accountCloudDTO = accountCloudDTO;
     }
 
     @GetMapping("/java-version")
@@ -58,10 +61,12 @@ public class AccountController {
     public ResponseEntity<AccountMSIdentifierDTO> getAccountMSIdentifier() {
         return ResponseEntity.status(HttpStatus.OK).body(accountsRecordDTO);
     }
+
     @GetMapping("/accounts-cloud")
     public ResponseEntity<AccountCloudDTO> getAccountMSCloudProviders() {
         return ResponseEntity.status(HttpStatus.OK).body(accountCloudDTO);
     }
+
     @GetMapping
     public PagedResult<Accounts> getAllAccounts(
             @RequestParam(

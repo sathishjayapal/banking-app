@@ -3,6 +3,7 @@ package me.sathish.cards.controllers;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.extern.slf4j.Slf4j;
+import me.sathish.cards.dto.CardCloudDTO;
 import me.sathish.cards.dto.CardDTO;
 import me.sathish.cards.dto.CardMSIdentifierDTO;
 import me.sathish.cards.dto.CardMSReponseDTO;
@@ -36,12 +37,17 @@ public class CardController {
     @Autowired
     Environment environment;
     private CardMSIdentifierDTO  cardMSIdentifierDTO;
+    private CardCloudDTO cardCloudDTO;
     @Autowired
-    public CardController(CardService cardService, CardMSIdentifierDTO cardMSIdentifierDTO) {
+    public CardController(CardService cardService, CardMSIdentifierDTO cardMSIdentifierDTO, CardCloudDTO cardCloudDTO) {
         this.cardMSIdentifierDTO=cardMSIdentifierDTO;
         this.cardService = cardService;
+        this.cardCloudDTO= cardCloudDTO;
     }
-
+    @GetMapping("/cards-cloud")
+    public ResponseEntity<CardCloudDTO> getCardMSCloudProviders() {
+        return ResponseEntity.status(HttpStatus.OK).body(cardCloudDTO);
+    }
     @GetMapping("/java-version")
     public ResponseEntity<CardMSReponseDTO> getCardMSJVM() {
         return ResponseEntity.status(HttpStatus.OK)
