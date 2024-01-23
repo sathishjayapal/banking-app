@@ -14,9 +14,10 @@ spring:
           default-label: main
           timeout: 5
           clone-on-start: true
+          search-paths: '{application}'
       label: main
   rabbitmq:
-    host: "localhost"
+    host: "4.156.56.142"
     port: 5672
     username: "guest"
     password: "guest"

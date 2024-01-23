@@ -8,3 +8,5 @@ spring:
     import: "optional:configserver:http://localhost:8888?fail-fast=true&max-attempts=10&max-interval=1500&multiplier=1.2&initial-interval=1100"
   profiles:
       active: heroku
+server:
+    port: 9044
