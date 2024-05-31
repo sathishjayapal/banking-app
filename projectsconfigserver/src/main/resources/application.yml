@@ -17,7 +17,7 @@ spring:
           search-paths: '{application}'
       label: main
   rabbitmq:
-    host: "4.156.56.142"
+    host: "localhost"
     port: 5672
     username: "guest"
     password: "guest"
