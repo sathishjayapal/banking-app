@@ -15,7 +15,7 @@
 	<description>projectsconfigserver</description>
 	<properties>
 		<java.version>21</java.version>
-		<spotless.version>2.35.0</spotless.version>
+		<spotless.version>2.37.0</spotless.version>
 		<spring-cloud.version>2023.0.0</spring-cloud.version>
 	</properties>
 	<dependencies>
@@ -73,7 +73,7 @@
 				<configuration>
 					<java>
 						<googleJavaFormat>
-							<version>1.15.0</version>
+							<version>1.17.0</version>
 							<style>AOSP</style>
 						</googleJavaFormat>
 					</java>
